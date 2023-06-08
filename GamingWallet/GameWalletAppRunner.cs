@@ -13,7 +13,8 @@ namespace GamingWallet
             IWallet wallet,
             IOutputProviderService outputProvider,
             IInputProviderService inputProvider,
-            ISlotGameService slotGameService)
+            ISlotGameService slotGameService
+            )
         {
             this.wallet = wallet;
             this.outputProviderService = outputProvider;

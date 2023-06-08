@@ -6,9 +6,9 @@
 
         public void Deposit(decimal amount)
         {
-            if(amount < 0)
+            if(amount <= 0)
             {
-                throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
+                throw new ArgumentException(ErrorMessageConstants.LessThanOneAmountErrorMessage);
             }
 
             CurrentBalance += amount;
@@ -16,9 +16,9 @@
 
         public void Withdraw(decimal amount)
         {
-            if(amount < 0)
+            if(amount <= 0)
             {
-                throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
+                throw new ArgumentException(ErrorMessageConstants.LessThanOneAmountErrorMessage);
             }
 
             if(amount > CurrentBalance)
@@ -31,9 +31,9 @@
 
         public void Bet(decimal amount)
         {
-            if(amount < 0)
+            if(amount <= 0)
             {
-                throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
+                throw new ArgumentException(ErrorMessageConstants.LessThanOneAmountErrorMessage);
             }
 
             if(amount > CurrentBalance)
@@ -46,9 +46,9 @@
 
         public void AcceptWin(decimal amount)
         {
-            if(amount < 0)
+            if(amount <= 0)
             {
-                throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
+                throw new ArgumentException(ErrorMessageConstants.LessThanOneAmountErrorMessage);
             }
 
             CurrentBalance += amount;

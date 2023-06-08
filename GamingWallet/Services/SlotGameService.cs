@@ -7,7 +7,7 @@
         {
             if(amount < 0)
             {
-                throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
+                throw new ArgumentException(ErrorMessageConstants.LessThanOneAmountErrorMessage);
             }
             int chance = random.Next(GameConstants.OverallChanceMin, GameConstants.OverallChanceMin);
 

@@ -2,14 +2,14 @@
 {
     public interface IWallet
     {
-        double CurrentBalance { get; }
+        decimal CurrentBalance { get; }
 
-        void Deposit(double amount);
+        void Deposit(decimal amount);
 
-        void Withdraw(double amount);
+        void Withdraw(decimal amount);
 
-        void Bet(double amount);
+        void Bet(decimal amount);
 
-        void AcceptWin(double amount);
+        void AcceptWin(decimal amount);
     }
 }

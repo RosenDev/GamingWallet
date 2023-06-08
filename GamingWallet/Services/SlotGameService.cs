@@ -2,27 +2,26 @@
 {
     public class SlotGameService : ISlotGameService
     {
-        public double PlayWithAmount(double amount)
+        private readonly Random random = new Random();
+        public decimal PlayWithAmount(decimal amount)
         {
             if(amount < 0)
             {
                 throw new ArgumentException(ErrorMessageConstants.LessThanZeroAmountErrorMessage);
             }
+            int chance = random.Next(GameConstants.OverallChanceMin, GameConstants.OverallChanceMin);
 
-            var random = new Random();
-            int chance = random.Next(1, 101);
-
-            if(chance >= 50)
+            if(chance >= GameConstants.ChanceOfLose)
             {
                 return 0;
             }
-            else if(chance <= 40 && chance > 10)
+            else if(chance <= GameConstants.ChanceOfDoubledWinMax && chance > GameConstants.ChanceOfDoubledWinMin)
             {
-                return amount * 2;
+                return amount * GameConstants.DefaultMultiplier;
             }
             else
             {
-                var mutiplier = random.Next(2, 11);
+                var mutiplier = random.Next(GameConstants.AdvancedMutiplierMin, GameConstants.AdvancedMutiplierMax);
 
                 return amount * mutiplier;
             }

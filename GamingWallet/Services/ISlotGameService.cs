@@ -2,6 +2,6 @@
 {
     public interface ISlotGameService
     {
-        double PlayWithAmount(double amount);
+        decimal PlayWithAmount(decimal amount);
     }
 }

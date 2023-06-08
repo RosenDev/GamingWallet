@@ -5,11 +5,19 @@ namespace GamingWallet
     public class GameWalletAppRunner : IAppRunner
     {
         private readonly IWallet wallet;
+        private readonly IOutputProviderService outputProviderService;
+        private readonly IInputProviderService inputProviderService;
         private readonly ISlotGameService slotGameService;
 
-        public GameWalletAppRunner(IWallet wallet, ISlotGameService slotGameService)
+        public GameWalletAppRunner(
+            IWallet wallet,
+            IOutputProviderService outputProvider,
+            IInputProviderService inputProvider,
+            ISlotGameService slotGameService)
         {
             this.wallet = wallet;
+            this.outputProviderService = outputProvider;
+            this.inputProviderService = inputProvider;
             this.slotGameService = slotGameService;
         }
 
@@ -21,62 +29,62 @@ namespace GamingWallet
             {
                 try
                 {
-                    Console.WriteLine("Please submit action:");
-                    var operationWithParams = Console.ReadLine().Split(" ");
+                    outputProviderService.WriteLine("Please submit action:");
+                    var operationWithParams = inputProviderService.ReadLine()!.Split(" ");
                     operation = operationWithParams[0];
 
                     if(operation == "deposit")
                     {
                         if(operationWithParams.Length == 1)
                         {
-                            Console.WriteLine("Amount is required!");
+                            outputProviderService.WriteLine("Amount is required!");
                             continue;
                         }
 
-                        if(!double.TryParse(operationWithParams[1], out double amount))
+                        if(!decimal.TryParse(operationWithParams[1], out decimal amount))
                         {
-                            Console.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
+                            outputProviderService.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
                             continue;
                         }
 
                         wallet.Deposit(amount);
 
-                        Console.WriteLine($"Your deposit of {amount} was succesfull. Your current balance is ${wallet.CurrentBalance}");
+                        outputProviderService.WriteLine($"Your deposit of {amount} was succesfull. Your current balance is ${wallet.CurrentBalance}");
                     }
                     else if(operation == "withdraw")
                     {
                         if(operationWithParams.Length == 1)
                         {
-                            Console.WriteLine("Amount is required!");
+                            outputProviderService.WriteLine("Amount is required!");
                             continue;
                         }
 
-                        if(!double.TryParse(operationWithParams[1], out double amount))
+                        if(!decimal.TryParse(operationWithParams[1], out decimal amount))
                         {
-                            Console.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
+                            outputProviderService.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
                             continue;
                         }
 
                         wallet.Withdraw(amount);
-                        Console.WriteLine($"Your withdrawal of {amount} was succesfull. Your current balance is ${wallet.CurrentBalance}");
+                        outputProviderService.WriteLine($"Your withdrawal of {amount} was succesfull. Your current balance is ${wallet.CurrentBalance}");
                     }
                     else if(operation == "bet")
                     {
                         if(operationWithParams.Length == 1)
                         {
-                            Console.WriteLine("Amount is required!");
+                            outputProviderService.WriteLine("Amount is required!");
                             continue;
                         }
 
-                        if(!double.TryParse(operationWithParams[1], out double amount))
+                        if(!decimal.TryParse(operationWithParams[1], out decimal amount))
                         {
-                            Console.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
+                            outputProviderService.WriteLine(ErrorMessageConstants.InvalidNumberErrorMessage);
                             continue;
                         }
 
                         if(amount < 1 || amount > 10)
                         {
-                            Console.WriteLine("The amount should be between $1 and $10!");
+                            outputProviderService.WriteLine("The amount should be between $1 and $10!");
                             continue;
                         }
 
@@ -87,22 +95,22 @@ namespace GamingWallet
                         if(win > 0)
                         {
                             wallet.AcceptWin(win);
-                            Console.WriteLine($"Congrats - you won ${win}! Your current balance is: ${wallet.CurrentBalance}");
+                            outputProviderService.WriteLine($"Congrats - you won ${win}! Your current balance is: ${wallet.CurrentBalance}");
                         }
                         else
                         {
-                            Console.WriteLine($"No luck this time! Your current balance is: ${wallet.CurrentBalance}");
+                            outputProviderService.WriteLine($"No luck this time! Your current balance is: ${wallet.CurrentBalance}");
                         }
                     }
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    outputProviderService.WriteLine(ex.Message);
                 }
 
             } while(operation != "exit");
 
-            Console.WriteLine("Thank you for playing! Hope to see you again soon.");
+            outputProviderService.WriteLine("Thank you for playing! Hope to see you again soon.");
         }
     }
 }

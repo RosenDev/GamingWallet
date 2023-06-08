@@ -2,9 +2,9 @@
 {
     public class Wallet : IWallet
     {
-        public double CurrentBalance { get; private set; }
+        public decimal CurrentBalance { get; private set; }
 
-        public void Deposit(double amount)
+        public void Deposit(decimal amount)
         {
             if(amount < 0)
             {
@@ -14,7 +14,7 @@
             CurrentBalance += amount;
         }
 
-        public void Withdraw(double amount)
+        public void Withdraw(decimal amount)
         {
             if(amount < 0)
             {
@@ -29,7 +29,7 @@
             CurrentBalance -= amount;
         }
 
-        public void Bet(double amount)
+        public void Bet(decimal amount)
         {
             if(amount < 0)
             {
@@ -44,7 +44,7 @@
             CurrentBalance -= amount;
         }
 
-        public void AcceptWin(double amount)
+        public void AcceptWin(decimal amount)
         {
             if(amount < 0)
             {
